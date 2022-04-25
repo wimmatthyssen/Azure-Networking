@@ -38,9 +38,9 @@ $spoke3 = "tst"
 
 $subNameManagement = Get-AzSubscription | Where-Object {$_.Name -like "*management*"} #if needed, adjust to your subscription naming
 $subNameIdentity = Get-AzSubscription | Where-Object {$_.Name -like "*identity*"} #if needed, adjust to your subscription naming
-$subNamePrd = Get-AzSubscription | Where-Object {$_.Name -like "*prd*corp*"} #if needed, adjust to your subscription naming
-$subNameDev = Get-AzSubscription | Where-Object {$_.Name -like "*dev*corp*"} #if needed, adjust to your subscription naming
-$subNameTst = Get-AzSubscription | Where-Object {$_.Name -like "*tst*"} #if needed, adjust to your subscription naming
+$subNamePrd = Get-AzSubscription | Where-Object {$_.Name -like "*$spoke1*corp*"} #if needed, adjust to your subscription naming
+$subNameDev = Get-AzSubscription | Where-Object {$_.Name -like "*$spoke2*corp*"} #if needed, adjust to your subscription naming
+$subNameTst = Get-AzSubscription | Where-Object {$_.Name -like "*$spoke3*"} #if needed, adjust to your subscription naming
 
 $tenant = Get-AzTenant | Where-Object {$_.Name -like "*$companyShortName*"}
 
@@ -119,7 +119,7 @@ Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Create peerings from Management Hub to all spokes (peering with use of Virtual network gateway or Route Server set), if they don't exist
+## Create peerings from Management Hub VNet to all spokes VNets (peering with use of Virtual network gateway or Route Server set), if they don't exist
 
 # Change the current context to use the Management subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameManagement.SubscriptionId | Out-Null
@@ -159,7 +159,7 @@ Write-Host ($writeEmptyLine + "# VNet peering Management Hub configured" + $writ
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Create peering Identity Hub - Management Hub (peering with different subscriptions and use of remote gateway), if it doesn't exist
+## Create peering Identity Hub VNet - Management Hub VNet (peering with different subscriptions and use of remote gateway), if it doesn't exist
 
 # Change the current context to use the Identity subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameIdentity.SubscriptionId | Out-Null
@@ -177,7 +177,7 @@ Write-Host ($writeEmptyLine + "# VNet peering Identity Hub configured" + $writeS
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Create peering Production Spoke - Management Hub (peering with different subscriptions and use of remote gateway), if it doesn't exist
+## Create peering Spoke 1 (e.g. Production) VNet - Management Hub VNet (peering with different subscriptions and use of remote gateway), if it doesn't exist
 
 # Change the current context to use the Corp Production subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNamePrd.SubscriptionId | Out-Null 
@@ -195,7 +195,7 @@ Write-Host ($writeEmptyLine + "# VNet peering Prd configured" + $writeSeperatorS
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Create peering Development Spoke - Management Hub (peering with different subscriptions and use of remote gateway), if it doesn't exist
+## Create peering Spoke 2 (e.g. Development) VNet - Management Hub VNet (peering with different subscriptions and use of remote gateway), if it doesn't exist
 
 # Change the current context to use the Corp Development subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameDev.SubscriptionId | Out-Null 
@@ -213,7 +213,7 @@ Write-Host ($writeEmptyLine + "# VNet peering Dev configured" + $writeSeperatorS
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Create peering Test Spoke - Management Hub (peering with different subscriptions and use of remote gateway), if it doesn't exist
+## Create peering Spoke 3 (e.g. Test) VNet - Management Hub VNet (peering with different subscriptions and use of remote gateway), if it doesn't exist
 
 # Change the current context to use the Test subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameTst.SubscriptionId | Out-Null 
