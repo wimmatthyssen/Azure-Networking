@@ -25,6 +25,7 @@ Connect-AzAccount
 
 .LINK
 
+https://wmatthyssen.com/2022/04/25/azure-networking-configure-vnet-peering-with-an-azure-powershell-script-between-vnets-in-different-subscriptions/
 #>
 
 ## ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
