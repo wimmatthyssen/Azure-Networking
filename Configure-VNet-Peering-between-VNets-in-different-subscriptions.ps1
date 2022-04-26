@@ -191,7 +191,7 @@ try {
     Add-AzVirtualNetworkPeering -Name $peeringNamePrd1 -VirtualNetwork $vnetSpoke1 -RemoteVirtualNetworkId $remoteManagementHubVirtualNetworkId -UseRemoteGateways | Out-Null    
 }
 
-Write-Host ($writeEmptyLine + "# VNet peering Prd configured" + $writeSeperatorSpaces + $currentTime)`
+Write-Host ($writeEmptyLine + "# VNet peering $spoke1 configured" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine 
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ try {
     Add-AzVirtualNetworkPeering -Name $peeringNameDev1 -VirtualNetwork $vnetSpoke2 -RemoteVirtualNetworkId $remoteManagementHubVirtualNetworkId -UseRemoteGateways | Out-Null 
 }
 
-Write-Host ($writeEmptyLine + "# VNet peering Dev configured" + $writeSeperatorSpaces + $currentTime)`
+Write-Host ($writeEmptyLine + "# VNet peering $spoke2 configured" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine 
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -227,7 +227,7 @@ try {
     Add-AzVirtualNetworkPeering -Name $peeringNameTst1 -VirtualNetwork $vnetSpoke3 -RemoteVirtualNetworkId $remoteManagementHubVirtualNetworkId -UseRemoteGateways | Out-Null  
 }
 
-Write-Host ($writeEmptyLine + "# VNet peering Tst configured" + $writeSeperatorSpaces + $currentTime)`
+Write-Host ($writeEmptyLine + "# VNet peering $spoke3 configured" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine 
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
