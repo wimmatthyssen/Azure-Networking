@@ -53,9 +53,9 @@ $rgNetworkingSpoke3 = #<your Spoke 3 VNet rg here> The Azure resource group in w
 
 $vnetNameManagementHub = #<your Management Hub VNet name here> The existing VNet in the Management Hub. Example: "vnet-hub-myh-weu-01" 
 $vnetNameIdenitityHub = #<your Identity Hub VNet name here> The existing VNet in the Management Hub. Example: "vnet-hub-myh-weu-02"
-$vnetNameSpoke1 = #<your Spoke 1 VNet VNet name here> The existing VNet in Spoke 1. Example: "vnet-prd-myh-weu-01"
-$vnetNameSpoke2 = #<your Spoke 2 VNet VNet name here> The existing VNet in Spoke 2. Example: "vnet-dev-myh-weu-01"
-$vnetNameSpoke3 = #<your Spoke 3 VNet VNet VNet name here> The existing VNet in Spoke 3. Example: "vnet-tst-myh-weu-01"
+$vnetNameSpoke1 = #<your Spoke 1 VNet name here> The existing VNet in Spoke 1. Example: "vnet-prd-myh-weu-01"
+$vnetNameSpoke2 = #<your Spoke 2 VNet name here> The existing VNet in Spoke 2. Example: "vnet-dev-myh-weu-01"
+$vnetNameSpoke3 = #<your Spoke 3 VNet name here> The existing VNet in Spoke 3. Example: "vnet-tst-myh-weu-01"
 
 $subShort = "/subscriptions/"
 $rgShort = "/resourceGroups/"
