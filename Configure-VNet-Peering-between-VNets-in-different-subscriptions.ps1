@@ -180,7 +180,7 @@ Write-Host ($writeEmptyLine + "# VNet peering Identity Hub configured" + $writeS
 
 ## Create peering Spoke 1 (e.g. Production) VNet - Management Hub VNet (peering with different subscriptions and use of remote gateway), if it doesn't exist
 
-# Change the current context to use the Corp Production subscription
+# Change the current context to use the spoke 1 subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNamePrd.SubscriptionId | Out-Null 
 
 $vnetSpoke1 = Get-AzVirtualNetwork -Name $vnetNameSpoke1 -ResourceGroupName $rgNetworkingSpoke1
@@ -198,7 +198,7 @@ Write-Host ($writeEmptyLine + "# VNet peering Prd configured" + $writeSeperatorS
 
 ## Create peering Spoke 2 (e.g. Development) VNet - Management Hub VNet (peering with different subscriptions and use of remote gateway), if it doesn't exist
 
-# Change the current context to use the Corp Development subscription
+# Change the current context to use the spoke 2 subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameDev.SubscriptionId | Out-Null 
 
 $vnetSpoke2 = Get-AzVirtualNetwork -Name $vnetNameSpoke2 -ResourceGroupName $rgNetworkingSpoke2
@@ -216,7 +216,7 @@ Write-Host ($writeEmptyLine + "# VNet peering Dev configured" + $writeSeperatorS
 
 ## Create peering Spoke 3 (e.g. Test) VNet - Management Hub VNet (peering with different subscriptions and use of remote gateway), if it doesn't exist
 
-# Change the current context to use the Test subscription
+# Change the current context to use the spoke 3 subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameTst.SubscriptionId | Out-Null 
 
 $vnetSpoke3 = Get-AzVirtualNetwork -Name $vnetNameSpoke3 -ResourceGroupName $rgNetworkingSpoke3
