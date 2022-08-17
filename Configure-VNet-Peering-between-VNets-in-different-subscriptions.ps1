@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
 
-A script used to configure VNet peering between Hub and spoke VNets in different Azure Subscriptions.
+A script used to configure VNet peering between Hub and spoke VNets in different Azure subscriptions.
 
 .DESCRIPTION
 
-A script used to configure VNet peering between Hub and spoke VNets in different Azure Subscriptions.
+A script used to configure VNet peering between Hub and spoke VNets in different Azure subscriptions.
 
 .NOTES
 
@@ -14,7 +14,7 @@ Created:        20/04/2021
 Last modified:  25/04/2022
 Author:         Wim Matthyssen
 PowerShell:     Azure PowerShell or Azure Cloud Shell
-Version:        Install latest Azure PowerShell modules (at least Az version 7.2.0 and Az.Network version 4.16.0 is required)
+Version:        PowerShell Az (v7.2.0) and Az.Network (v4.16.0)
 Action:         Change variables were needed to fit your needs
 Disclaimer:     This script is provided "As Is" with no warranties.
 
@@ -32,7 +32,7 @@ https://wmatthyssen.com/2022/04/25/azure-networking-configure-vnet-peering-with-
 
 ## Variables
 
-$hub = "hub"
+$companyShortName = #"<your company short name here>" The three-letter abbreviation of your company name here. Example: "myh"
 $spoke1 = "prd"
 $spoke2 = "dev"
 $spoke3 = "tst"
@@ -45,11 +45,11 @@ $subNameTst = Get-AzSubscription | Where-Object {$_.Name -like "*$spoke3*"} #if 
 
 $tenant = Get-AzTenant | Where-Object {$_.Name -like "*$companyShortName*"}
 
-$rgNetworkingManagementHub = #<your Management Hub VNet rg here> The Azure resource group in which your existing Management Hub VNet is deployed. Example: "rg-hub-myh-networking-01" 
-$rgNetworkingIdentityHub = #<your Identity Hub VNet rg here> The Azure resource group in which your existing Identity Hub VNet is deployed. Example: "rg-hub-myh-networking-02"
-$rgNetworkingSpoke1 = #<your Spoke 1 VNet rg here> The Azure resource group in which your existing Spoke 1 VNet is deployed. Example: "rg-prd-myh-networking-01"
-$rgNetworkingSpoke2 = #<your Spoke 2 VNet rg here> The Azure resource group in which your existing Spoke 2 VNet is deployed. Example: "rg-dev-myh-networking-01"  
-$rgNetworkingSpoke3 = #<your Spoke 3 VNet rg here> The Azure resource group in which your existing Spoke 3 VNet is deployed. Example: "rg-tst-myh-networking-01"
+$rgNetworkingManagementHubName = #<your Management Hub VNet rg here> The Azure resource group in which your existing Management Hub VNet is deployed. Example: "rg-hub-myh-networking-01" 
+$rgNetworkingIdentityHubName = #<your Identity Hub VNet rg here> The Azure resource group in which your existing Identity Hub VNet is deployed. Example: "rg-hub-myh-networking-02"
+$rgNetworkingSpoke1Name = #<your Spoke 1 VNet rg here> The Azure resource group in which your existing Spoke 1 VNet is deployed. Example: "rg-prd-myh-networking-01"
+$rgNetworkingSpoke2Name = #<your Spoke 2 VNet rg here> The Azure resource group in which your existing Spoke 2 VNet is deployed. Example: "rg-dev-myh-networking-01"  
+$rgNetworkingSpoke3Name = #<your Spoke 3 VNet rg here> The Azure resource group in which your existing Spoke 3 VNet is deployed. Example: "rg-tst-myh-networking-01"
 
 $vnetNameManagementHub = #<your Management Hub VNet name here> The existing VNet in the Management Hub. Example: "vnet-hub-myh-weu-01" 
 $vnetNameIdenitityHub = #<your Identity Hub VNet name here> The existing VNet in the Management Hub. Example: "vnet-hub-myh-weu-02"
@@ -61,11 +61,11 @@ $subShort = "/subscriptions/"
 $rgShort = "/resourceGroups/"
 $providersShort = "/providers/Microsoft.Network/virtualNetworks/"
 
-$remoteManagementHubVirtualNetworkId = $subShort + $subNameManagement.SubscriptionId + $rgShort + $rgNetworkingManagementHub + $providersShort + $vnetNameManagementHub
-$remoteIdentityHubVirtualNetworkId = $subShort + $subNameIdentity.SubscriptionId + $rgShort + $rgNetworkingIdentityHub + $providersShort + $vnetNameIdenitityHub
-$remoteSpoke1VirtualNetworkId = $subShort + $subNamePrd.SubscriptionId + $rgShort + $rgNetworkingSpoke1 + $providersShort + $vnetNameSpoke1
-$remoteSpoke2VirtualNetworkId = $subShort + $subNameDev.SubscriptionId + $rgShort + $rgNetworkingSpoke2 + $providersShort + $vnetNameSpoke2
-$remoteSpoke3VirtualNetworkId = $subShort + $subNameTst.SubscriptionId + $rgShort + $rgNetworkingSpoke3 + $providersShort + $vnetNameSpoke3
+$remoteManagementHubVirtualNetworkId = $subShort + $subNameManagement.SubscriptionId + $rgShort + $rgNetworkingManagementHubName + $providersShort + $vnetNameManagementHub
+$remoteIdentityHubVirtualNetworkId = $subShort + $subNameIdentity.SubscriptionId + $rgShort + $rgNetworkingIdentityHubName + $providersShort + $vnetNameIdenitityHub
+$remoteSpoke1VirtualNetworkId = $subShort + $subNamePrd.SubscriptionId + $rgShort + $rgNetworkingSpoke1Name + $providersShort + $vnetNameSpoke1
+$remoteSpoke2VirtualNetworkId = $subShort + $subNameDev.SubscriptionId + $rgShort + $rgNetworkingSpoke2Name + $providersShort + $vnetNameSpoke2
+$remoteSpoke3VirtualNetworkId = $subShort + $subNameTst.SubscriptionId + $rgShort + $rgNetworkingSpoke3Name + $providersShort + $vnetNameSpoke3
 
 $peeringNameHub1 = #<your peering name Hub VNet 2 Hub Identity VNet> The peering name for the peering between the Hub VNet and Hub Identity VNet. Example: "peer-hub-2-hub-ide"
 $peeringNameHub2 = #<your peering name Hub VNet 2 Spoke 1 VNet> The peering name for the peering between the Hub VNet and Spoke 1 VNet. Example: "peer-hub-2-hub-prd"
@@ -125,32 +125,32 @@ Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 # Change the current context to use the Management subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameManagement.SubscriptionId | Out-Null
 
-$vnetManagementHub = Get-AzVirtualNetwork -Name $vnetNameManagementHub -ResourceGroupName $rgNetworkingManagementHub
+$vnetManagementHub = Get-AzVirtualNetwork -Name $vnetNameManagementHub -ResourceGroupName $rgNetworkingManagementHubName
 
 # Create $peeringNameHub1, if it doesn't exist (peering with use of Virtual network gateway or Route Server set)
 try {
-    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetManagementHub.Name -ResourceGroupName $rgNetworkingManagementHub -Name $peeringNameHub1 -ErrorAction Stop | Out-Null 
+    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetManagementHub.Name -ResourceGroupName $rgNetworkingManagementHubName -Name $peeringNameHub1 -ErrorAction Stop | Out-Null 
 } catch {
     Add-AzVirtualNetworkPeering -Name $peeringNameHub1 -VirtualNetwork $vnetManagementHub -RemoteVirtualNetworkId $remoteIdentityHubVirtualNetworkId -AllowGatewayTransit | Out-Null   
 }
 
 # Create $peeringNameHub2, if it doesn't exist (peering with use of Virtual network gateway or Route Server set)
 try {
-    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetManagementHub.Name -ResourceGroupName $rgNetworkingManagementHub -Name $peeringNameHub2 -ErrorAction Stop | Out-Null
+    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetManagementHub.Name -ResourceGroupName $rgNetworkingManagementHubName -Name $peeringNameHub2 -ErrorAction Stop | Out-Null
 } catch {
     Add-AzVirtualNetworkPeering -Name $peeringNameHub2 -VirtualNetwork $vnetManagementHub -RemoteVirtualNetworkId $remoteSpoke1VirtualNetworkId -AllowGatewayTransit | Out-Null  
 }
 
 # Create $peeringNameHub3, if it doesn't exist (peering with use of Virtual network gateway or Route Server set)
 try {
-    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetManagementHub.Name -ResourceGroupName $rgNetworkingManagementHub -Name $peeringNameHub3 -ErrorAction Stop | Out-Null 
+    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetManagementHub.Name -ResourceGroupName $rgNetworkingManagementHubName -Name $peeringNameHub3 -ErrorAction Stop | Out-Null 
 } catch {
     Add-AzVirtualNetworkPeering -Name $peeringNameHub3 -VirtualNetwork $vnetManagementHub -RemoteVirtualNetworkId $remoteSpoke2VirtualNetworkId -AllowGatewayTransit | Out-Null  
 }
 
 # Create $peeringNameHub4, if it doesn't exist (peering with use of Virtual network gateway or Route Server set)
 try {
-    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetManagementHub.Name -ResourceGroupName $rgNetworkingManagementHub -Name $peeringNameHub4 -ErrorAction Stop | Out-Null 
+    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetManagementHub.Name -ResourceGroupName $rgNetworkingManagementHubName -Name $peeringNameHub4 -ErrorAction Stop | Out-Null 
 } catch {
     Add-AzVirtualNetworkPeering -Name $peeringNameHub4 -VirtualNetwork $vnetManagementHub -RemoteVirtualNetworkId $remoteSpoke3VirtualNetworkId -AllowGatewayTransit | Out-Null   
 }
@@ -165,10 +165,10 @@ Write-Host ($writeEmptyLine + "# VNet peering Management Hub configured" + $writ
 # Change the current context to use the Identity subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameIdentity.SubscriptionId | Out-Null
 
-$vnetIdentityHub = Get-AzVirtualNetwork -Name $vnetNameIdenitityHub -ResourceGroupName $rgNetworkingIdentityHub
+$vnetIdentityHub = Get-AzVirtualNetwork -Name $vnetNameIdenitityHub -ResourceGroupName $rgNetworkingIdentityHubName
 
 try {
-    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetIdentityHub.Name -ResourceGroupName $rgNetworkingIdentityHub -Name $peeringNameIde1 -ErrorAction Stop | Out-Null 
+    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetIdentityHub.Name -ResourceGroupName $rgNetworkingIdentityHubName -Name $peeringNameIde1 -ErrorAction Stop | Out-Null 
 } catch {
     Add-AzVirtualNetworkPeering -Name $peeringNameIde1 -VirtualNetwork $vnetIdentityHub -RemoteVirtualNetworkId $remoteManagementHubVirtualNetworkId -UseRemoteGateways | Out-Null    
 }
@@ -183,10 +183,10 @@ Write-Host ($writeEmptyLine + "# VNet peering Identity Hub configured" + $writeS
 # Change the current context to use the spoke 1 subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNamePrd.SubscriptionId | Out-Null 
 
-$vnetSpoke1 = Get-AzVirtualNetwork -Name $vnetNameSpoke1 -ResourceGroupName $rgNetworkingSpoke1
+$vnetSpoke1 = Get-AzVirtualNetwork -Name $vnetNameSpoke1 -ResourceGroupName $rgNetworkingSpoke1Name
 
 try {
-    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetSpoke1.Name -ResourceGroupName $rgNetworkingSpoke1 -Name $peeringNamePrd1 -ErrorAction Stop | Out-Null 
+    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetSpoke1.Name -ResourceGroupName $rgNetworkingSpoke1Name -Name $peeringNamePrd1 -ErrorAction Stop | Out-Null 
 } catch {
     Add-AzVirtualNetworkPeering -Name $peeringNamePrd1 -VirtualNetwork $vnetSpoke1 -RemoteVirtualNetworkId $remoteManagementHubVirtualNetworkId -UseRemoteGateways | Out-Null    
 }
@@ -201,10 +201,10 @@ Write-Host ($writeEmptyLine + "# VNet peering $spoke1 configured" + $writeSepera
 # Change the current context to use the spoke 2 subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameDev.SubscriptionId | Out-Null 
 
-$vnetSpoke2 = Get-AzVirtualNetwork -Name $vnetNameSpoke2 -ResourceGroupName $rgNetworkingSpoke2
+$vnetSpoke2 = Get-AzVirtualNetwork -Name $vnetNameSpoke2 -ResourceGroupName $rgNetworkingSpoke2Name
 
 try {
-    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetSpoke2.Name -ResourceGroupName $rgNetworkingSpoke2 -Name $peeringNameDev1 -ErrorAction Stop | Out-Null  
+    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetSpoke2.Name -ResourceGroupName $rgNetworkingSpoke2Name -Name $peeringNameDev1 -ErrorAction Stop | Out-Null  
 } catch {
     Add-AzVirtualNetworkPeering -Name $peeringNameDev1 -VirtualNetwork $vnetSpoke2 -RemoteVirtualNetworkId $remoteManagementHubVirtualNetworkId -UseRemoteGateways | Out-Null 
 }
@@ -219,10 +219,10 @@ Write-Host ($writeEmptyLine + "# VNet peering $spoke2 configured" + $writeSepera
 # Change the current context to use the spoke 3 subscription
 Set-AzContext -TenantId $tenant.TenantId -SubscriptionId $subNameTst.SubscriptionId | Out-Null 
 
-$vnetSpoke3 = Get-AzVirtualNetwork -Name $vnetNameSpoke3 -ResourceGroupName $rgNetworkingSpoke3
+$vnetSpoke3 = Get-AzVirtualNetwork -Name $vnetNameSpoke3 -ResourceGroupName $rgNetworkingSpoke3Name
 
 try {
-    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetSpoke3.Name -ResourceGroupName $rgNetworkingSpoke3 -Name $peeringNameTst1 -ErrorAction Stop | Out-Null 
+    Get-AzVirtualNetworkPeering -VirtualNetworkName $vnetSpoke3.Name -ResourceGroupName $rgNetworkingSpoke3Name -Name $peeringNameTst1 -ErrorAction Stop | Out-Null 
 } catch {
     Add-AzVirtualNetworkPeering -Name $peeringNameTst1 -VirtualNetwork $vnetSpoke3 -RemoteVirtualNetworkId $remoteManagementHubVirtualNetworkId -UseRemoteGateways | Out-Null  
 }
