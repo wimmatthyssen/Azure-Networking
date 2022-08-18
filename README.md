@@ -16,3 +16,7 @@ Currently this repository holds the following scritps:
 - **Generate-authenticaton-certificates-P2S-VPN.ps1**
 
   More information about this script used to generate a new self-signed root certificate and a client certificate for use with an Azure Point-to-Site (P2S) VPN can be found on my blog: https://wmatthyssen.com/2021/12/15/powershell-script-generate-a-self-signed-root-certificate-and-client-certificate-for-use-with-an-azure-p2s-vpn/
+  
+ - **Configure-NSG-Flow-Logs-for-all-NSGs-in-an-Azure-Subscription.ps1**
+
+  More information about this script used to to configure NSG FLog logs for all NSG's used in an Azure Subscription can be found on my blog: https://wmatthyssen.com/2021/12/15/powershell-script-generate-a-self-signed-root-certificate-and-client-certificate-for-use-with-an-azure-p2s-vpn/
