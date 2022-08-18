@@ -11,7 +11,7 @@ The script will do all of the following:
 Check if the PowerShell window is running as Administrator (when not running from Cloud Shell), otherwise the Azure PowerShell script will be exited.
 Suppress breaking change warning messages.
 Store the specified set of tags in a hash table.
-Register Insights provider in order for flow logging to work, if not already registered. Registration may take up to 10 minutes.
+Register Insights provider (Microsoft.Insights) in order for flow logging to work, if not already registered. Registration may take up to 10 minutes.
 Create a resource group for the Storage account which will store the flow logs, if it not already exists
 Create a general purpose v2 storage account for storing the flow logs with specific configuration settings, if it not already exists. Also apply the necessary tags to this storage account.
 Enable NSG Flow logs and Traffic Analytics for all NSG's.
