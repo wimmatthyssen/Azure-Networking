@@ -19,4 +19,8 @@ Currently this repository holds the following scritps:
   
 - **Configure-NSG-Flow-Logs-for-all-NSGs-in-an-Azure-Subscription.ps1**
 
-  More information about this script used to to configure NSG FLog logs for all NSG's used in an Azure Subscription can be found on my blog: https://wmatthyssen.com/2022/08/18/azure-networking-configure-nsg-flow-logs-for-all-nsgs-in-an-azure-subscription-with-an-azure-powershell-script/
+  More information about this script used to configure NSG FLog logs for all NSG's used in an Azure Subscription can be found on my blog: https://wmatthyssen.com/2022/08/18/azure-networking-configure-nsg-flow-logs-for-all-nsgs-in-an-azure-subscription-with-an-azure-powershell-script/
+  
+- **Disconnect-all-current-P2S-VPN-connections.ps1**
+
+  More information about this script used used to disconnect all current P2S VPN connections can be found on my blog: 
