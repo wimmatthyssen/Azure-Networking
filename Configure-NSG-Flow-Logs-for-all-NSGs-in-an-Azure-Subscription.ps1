@@ -46,11 +46,10 @@ https://wmatthyssen.com/2022/08/18/azure-networking-configure-nsg-flow-logs-for-
 ## Variables
 
 $abbraviationLog = "log"
-$inventoryNumbering = 1
 $region = "westeurope"
 
-$rgNameStorage = "rg" + "-" + $spoke + "-" + $companyShortName + "-" + "storage" + "-" + $inventoryNumbering.ToString("D2")
-$rgNameNetworkWatcher = "rg" + "-" + $spoke + "-" + $companyShortName + "-" + "networkwatcher" + "-" + $inventoryNumbering.ToString("D2")
+$rgNameStorage = #<your storage resource group name here> The name of new or existing storage resource group in which the storage account holing the flow logs exists. Example: "rg-prd-myh-storage-01"
+$rgNameNetworkWatcher = #<your Network Watcher resource group name here> The name of the Network Watcher. Example: "rg-prd-myh-networkwatcher-01"
 
 $networkWatcherName = #<your Network Watcher name here> The name of the Network Watcher. Example: "nw-prd-myh-we-01"
 $logAnalyticsWorkspaceName = #<your Log Analytics workspace name here> The name of your existing Log Analytics workspace. Example: "law-hub-myh-01"
