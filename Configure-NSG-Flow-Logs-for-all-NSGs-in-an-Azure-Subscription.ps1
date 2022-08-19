@@ -38,6 +38,7 @@ Set-AzContext -Subscription "<SubscriptionName>" (if not using the default subsc
 
 .LINK
 
+https://wmatthyssen.com/2022/08/18/azure-networking-configure-nsg-flow-logs-for-all-nsgs-in-an-azure-subscription-with-an-azure-powershell-script/
 #>
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
