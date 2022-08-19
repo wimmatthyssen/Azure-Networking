@@ -14,7 +14,7 @@ Store the specified set of tags in a hash table.
 Register Insights provider (Microsoft.Insights) in order for flow logging to work, if not already registered. Registration may take up to 10 minutes.
 Create a resource group for the storage account which will store the flow logs, if it not already exists
 Create a general purpose v2 storage account for storing the flow logs with specific configuration settings, if it not already exists. Also apply the necessary tags to this storage account.
-Enable NSG Flow logs and Traffic Analytics for all NSG's.
+Enable NSG Flow logs (Version 2) and Traffic Analytics for all NSG's.
 
 .NOTES
 
@@ -113,7 +113,7 @@ if ($PSVersionTable.Platform -eq "Unix") {
 
 ## Save Log Analytics workspace from the managment subscription in a variable
 
-# ! Delete this part if the Log Analytics is in the same subscription as the current one, or change the -like search parameter if it is stored in another subscription !
+# ! Delete this part if the Log Analytics is in the same subscription as the current one or change the -like search parameter if it is stored in another subscription !
 
 $subNameCurrent = (Get-AzContext).Subscription
 $subNameManagement = Get-Azsubscription | Where-Object {$_.Name -like "*management*"}
@@ -196,7 +196,7 @@ Write-Host ($writeEmptyLine + "# Storage account $storageAccountName created" + 
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Enable NSG Flow logs and Traffic Analytics for all NSG's
+## Enable NSG Flow logs (Version 2) and Traffic Analytics for all NSG's
 
 $networkWatcher = Get-AzNetworkWatcher -Name $networkWatcherName -ResourceGroupName $rgNameNetworkWatcher
 $storageAccount = Get-AzStorageAccount -ResourceGroupName $rgNameStorage -Name $storageAccountName
