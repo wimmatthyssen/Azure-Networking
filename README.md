@@ -19,4 +19,4 @@ Currently this repository holds the following scritps:
   
 - **Configure-NSG-Flow-Logs-for-all-NSGs-in-an-Azure-Subscription.ps1**
 
-  More information about this script used to to configure NSG FLog logs for all NSG's used in an Azure Subscription can be found on my blog: https://wmatthyssen.com/2021/12/15/powershell-script-generate-a-self-signed-root-certificate-and-client-certificate-for-use-with-an-azure-p2s-vpn/
+  More information about this script used to to configure NSG FLog logs for all NSG's used in an Azure Subscription can be found on my blog: https://wmatthyssen.com/2022/08/18/azure-networking-configure-nsg-flow-logs-for-all-nsgs-in-an-azure-subscription-with-an-azure-powershell-script/
