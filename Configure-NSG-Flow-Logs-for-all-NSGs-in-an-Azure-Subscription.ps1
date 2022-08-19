@@ -12,7 +12,7 @@ Check if the PowerShell window is running as Administrator (when not running 
 Suppress breaking change warning messages.
 Store the specified set of tags in a hash table.
 Register Insights provider (Microsoft.Insights) in order for flow logging to work, if not already registered. Registration may take up to 10 minutes.
-Create a resource group for the Storage account which will store the flow logs, if it not already exists
+Create a resource group for the storage account which will store the flow logs, if it not already exists
 Create a general purpose v2 storage account for storing the flow logs with specific configuration settings, if it not already exists. Also apply the necessary tags to this storage account.
 Enable NSG Flow logs and Traffic Analytics for all NSG's.
 
@@ -54,7 +54,7 @@ $rgNameNetworkWatcher = "rg" + "-" + $spoke + "-" + $companyShortName + "-" + "n
 $networkWatcherName = #<your Network Watcher name here> The name of the Network Watcher. Example: "nw-prd-myh-we-01"
 $logAnalyticsWorkspaceName = #<your Log Analytics workspace name here> The name of your existing Log Analytics workspace. Example: "law-hub-myh-01"
 
-$StorageAccountName = #<your Storage Account name here> The name of the storage account used to store your flow logs. Example: "stprdmyhlog01"
+$storageAccountName = #<your Storage Account name here> The name of the storage account used to store your flow logs. Example: "stprdmyhlog01"
 $storageAccountSkuName = "Standard_LRS"
 $storageAccountType = "StorageV2"
 $storageMinimumTlsVersion = "TLS1_2"
@@ -138,7 +138,7 @@ Write-Host ($writeEmptyLine + "# Specified set of tags available to add" + $writ
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Register Insights provider in order for flow logging to work, if not already registered. Registration may take up to 10 minutes
+## Register Insights provider (Microsoft.Insights) in order for flow logging to work, if not already registered. Registration may take up to 10 minutes
 
 # Register Microsoft.Insights resource provider
 Register-AzResourceProvider -ProviderNamespace Microsoft.Insights  | Out-Null
@@ -148,7 +148,7 @@ Write-Host ($writeEmptyLine + "# Microsoft.Insights resource provider currently 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Create a resource group for the Storage account which will store the flow logs, if it not already exists
+## Create a resource group for the storage account which will store the flow logs, if it not already exists
 
 try {
     Get-AzResourceGroup -Name $rgNameStorage -ErrorAction Stop | Out-Null 
@@ -173,9 +173,9 @@ Write-Host ($writeEmptyLine + "# Resource group $rgNameStorage available" + $wri
 ## Create a general purpose v2 storage account for storing the flow logs with specific configuration settings, if it not already exists. Also apply the necessary tags to this storage account.
 
 try {
-    Get-AzStorageAccount -ResourceGroupName $rgNameStorage -Name $StorageAccountName -ErrorAction Stop | Out-Null 
+    Get-AzStorageAccount -ResourceGroupName $rgNameStorage -Name $storageAccountName -ErrorAction Stop | Out-Null 
 } catch {
-    New-AzStorageAccount -ResourceGroupName $rgNameStorage -Name $StorageAccountName -SkuName $storageAccountSkuName -Location $region -Kind $storageAccountType `
+    New-AzStorageAccount -ResourceGroupName $rgNameStorage -Name $storageAccountName -SkuName $storageAccountSkuName -Location $region -Kind $storageAccountType `
     -AllowBlobPublicAccess $false -MinimumTlsVersion $storageMinimumTlsVersion | Out-Null 
 }
 
@@ -189,9 +189,9 @@ $tagsStorageAccount += @{$tagPurposeName = $tagPurposeValue}
 $tagsStorageAccount += @{$tagSkuName = $tagSkuValue}
 
 # Set tags storage account
-Set-AzStorageAccount -ResourceGroupName $rgNameStorage -Name $StorageAccountName -Tag $tagsStorageAccount | Out-Null
+Set-AzStorageAccount -ResourceGroupName $rgNameStorage -Name $storageAccountName -Tag $tagsStorageAccount | Out-Null
 
-Write-Host ($writeEmptyLine + "# Storage account $StorageAccountName created" + $writeSeperatorSpaces + $currentTime)`
+Write-Host ($writeEmptyLine + "# Storage account $storageAccountName created" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
