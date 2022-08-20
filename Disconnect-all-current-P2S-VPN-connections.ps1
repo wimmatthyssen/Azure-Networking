@@ -45,7 +45,7 @@ Set-AzContext -Subscription "<SubscriptionName>" (if not using the default subsc
 
 param(
     [parameter(Mandatory =$true)][ValidateNotNullOrEmpty()] [string] $gatewayName,
-    [parameter(Mandatory =$true)][ValidateNotNullOrEmpty()] [string] $gatewayResourceGroupName
+    [parameter(Mandatory =$true)][ValidateNotNullOrEmpty()] [string] $rgNameGateway
 )
 
 ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ Set-Item Env:\SuppressAzurePowerShellBreakingChangeWarnings "true"
 ## Check Virtual Network Gateway parameter input. If the input is incorrect, the script will be exited
 
 try {
-    Get-AzVirtualNetworkGateway -Name $gatewayName -ResourceGroupName $gatewayResourceGroupName -ErrorAction Stop | Out-Null 
+    Get-AzVirtualNetworkGateway -Name $gatewayName -ResourceGroupName $rgNameGateway -ErrorAction Stop | Out-Null 
 } catch {
     Write-Host ($writeEmptyLine + "# VPN Gateway $gatewayName does not exist, please validate your input. The script will be exited" + $writeSeperatorSpaces + $currentTime)`
     -foregroundcolor $foregroundColor1 $writeEmptyLine 
@@ -114,7 +114,7 @@ Write-Host ($writeEmptyLine + "# Virtual Network Gateway with name $gatewayName 
 
 ## Retrieve all current sessions and save them in a variable
 
-$currentSessions = Get-AzVirtualNetworkGatewayVpnClientConnectionHealth -VirtualNetworkGatewayName $gatewayName -ResourceGroupName $gatewayResourceGroupName 
+$currentSessions = Get-AzVirtualNetworkGatewayVpnClientConnectionHealth -VirtualNetworkGatewayName $gatewayName -ResourceGroupName $rgNameGateway 
 
 Write-Host ($writeEmptyLine + "# Current sessions variable created" + $writeSeperatorSpaces + $currentTime)`
 -foregroundcolor $foregroundColor2 $writeEmptyLine
@@ -124,7 +124,7 @@ Write-Host ($writeEmptyLine + "# Current sessions variable created" + $writeSepe
 # Disconnect all current sessions
 
 Foreach ($currentSession in $currentSessions) { 
-    Disconnect-AzVirtualNetworkGatewayVpnConnection -VirtualNetworkGatewayName $gatewayName -ResourceGroupName $gatewayResourceGroupName `
+    Disconnect-AzVirtualNetworkGatewayVpnConnection -VirtualNetworkGatewayName $gatewayName -ResourceGroupName $rgNameGateway `
     -VpnConnectionId $currentSession.VpnConnectionId | Out-Null
   
     Write-Host ($writeEmptyLine + "# Session with VpnConnectionID $($currentSession.VpnConnectionId) disconnected" + $writeSeperatorSpaces + $currentTime)`
