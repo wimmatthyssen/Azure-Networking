@@ -32,7 +32,7 @@ Connect-AzAccount
 Get-AzTenant (if not using the default tenant)
 Set-AzContext -tenantID "<xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx>" (if not using the default tenant)
 Set-AzContext -Subscription "<SubscriptionName>" (if not using the default subscription)
-.\Disconnect-all-current-P2S-VPN-connections.ps1
+.\Disconnect-all-current-P2S-VPN-connections.ps1 <"your virtual network gateway name here"> <"your virtual network gateway resource group name here">
 
 .LINK
 
