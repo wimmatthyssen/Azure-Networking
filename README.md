@@ -21,6 +21,10 @@ Currently this repository holds the following scritps:
 
   More information about this script used to configure NSG FLog logs for all NSG's used in an Azure Subscription can be found on my blog: https://wmatthyssen.com/2022/08/18/azure-networking-configure-nsg-flow-logs-for-all-nsgs-in-an-azure-subscription-with-an-azure-powershell-script/
   
+- **Get-Network-Topology-of-a-VNet-in-JSON-format.ps1**
+
+   More information about this script used to get a network topology of a VNet in a JSON output can be found on my blog:         https://wmatthyssen.com/2022/08/09/azure-tip-use-azure-network-watcher-to-view-or-download-the-network-topology-of-a-vnet/ 
+
 - **Disconnect-all-current-P2S-VPN-connections.ps1**
 
   More information about this script used used to disconnect all current P2S VPN connections can be found on my blog: 
