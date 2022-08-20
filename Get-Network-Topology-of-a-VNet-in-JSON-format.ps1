@@ -27,7 +27,7 @@ Connect-AzAccount
 Get-AzTenant (if not using the default tenant)
 Set-AzContext -tenantID "<xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx>" (if not using the default tenant)
 Set-AzContext -Subscription "<SubscriptionName>" (if not using the default subscription)
-.\Get-Network-Topology-of-a-VNet-in-JSON-format.ps1 <your network watcher name here> <your networking resource group here>
+.\Get-Network-Topology-of-a-VNet-in-JSON-format.ps1 <"your network watcher name here"> <"your networking resource group here">
 
 -> .\Get-Network-Level-View-of-a-VNet.ps1 nw-hub-myh-we-01 rg-hub-myh-networking-01
 
